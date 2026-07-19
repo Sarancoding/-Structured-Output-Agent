@@ -100,7 +100,7 @@ class RetryHandler:
         fn_kwargs = fn_kwargs or {}
         context = context or {}
 
-        result = RetryResult(final_status=ValidationStatus.FAILURE)
+        result = RetryResult(success=False, final_status=ValidationStatus.FAILURE)
         raw_generation_context = context.copy()
 
         for attempt in range(self.config.max_retries + 1):
@@ -275,7 +275,7 @@ class RetryHandler:
         fn_kwargs = fn_kwargs or {}
         context = context or {}
 
-        result = RetryResult(final_status=ValidationStatus.FAILURE)
+        result = RetryResult(success=False, final_status=ValidationStatus.FAILURE)
 
         for attempt in range(self.config.max_retries + 1):
             is_retry = attempt > 0

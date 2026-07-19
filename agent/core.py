@@ -244,7 +244,7 @@ class StructuredOutputAgent:
             "data": None,
             "error": None,
             "validation_status": retry_result.final_status.value,
-            "retry_attempts": len(retry_result.attempts),
+            "retry_attempts": max(0, len(retry_result.attempts) - 1),
             "attempt_details": [
                 {
                     "attempt": a.attempt_number,
@@ -273,7 +273,7 @@ class StructuredOutputAgent:
             "schema": schema_class.__name__,
             "success": retry_result.success,
             "status": retry_result.final_status.value,
-            "attempts": len(retry_result.attempts),
+            "attempts": max(0, len(retry_result.attempts) - 1),
             "processing_time_ms": result["processing_time_ms"],
         })
 
@@ -284,7 +284,7 @@ class StructuredOutputAgent:
                 "success": retry_result.success,
                 "status": retry_result.final_status.value,
                 "processing_time_ms": result["processing_time_ms"],
-                "attempts": len(retry_result.attempts),
+                "attempts": max(0, len(retry_result.attempts) - 1),
             },
         )
 
