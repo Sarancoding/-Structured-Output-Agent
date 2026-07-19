@@ -1,0 +1,62 @@
+# ─── Python ──────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+.pytest_cache/
+.coverage
+htmlcov/
+.coverage.*
+*.cover
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# ─── Logs ────────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ─── Environment ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# ─── IDE / Editor ────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-*
+
+# ─── Frontend ────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/*.tsbuildinfo
+
+# ─── Docker ──────────────────────────────────────────────────────────
+.docker/
+
+# ─── OS ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ─── Misc ───────────────────────────────────────────────────────────
+*.bak
+*.tmp
+.secrets
+*.key
