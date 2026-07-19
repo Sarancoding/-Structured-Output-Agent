@@ -17,6 +17,8 @@ from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
 from agent.core import StructuredOutputAgent, get_agent, reset_agent
@@ -92,16 +94,28 @@ def create_app(agent: Optional[StructuredOutputAgent] = None) -> FastAPI:
 
     # ─── Endpoints ─────────────────────────────────────────────────────────
 
-    @app.get("/")
-    async def root():
-        """Root endpoint with API information."""
-        return {
-            "name": "Structured Output Agent API",
-            "version": "1.0.0",
-            "status": "running",
-            "docs": "/docs",
-            "openapi": "/openapi.json",
-        }
+    # Try to serve static files from frontend/dist if they exist
+    frontend_dist_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend", "dist")
+
+    if os.path.exists(frontend_dist_path):
+        app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist_path, "assets")), name="assets")
+
+        @app.get("/")
+        async def root():
+            """Serve the frontend React application."""
+            return FileResponse(os.path.join(frontend_dist_path, "index.html"))
+    else:
+        @app.get("/")
+        async def root():
+            """Root endpoint with API information (fallback when frontend not built)."""
+            return {
+                "name": "Structured Output Agent API",
+                "version": "1.0.0",
+                "status": "running",
+                "docs": "/docs",
+                "openapi": "/openapi.json",
+                "warning": "Frontend dist directory not found. Please build the frontend."
+            }
 
     @app.get("/health")
     async def health_check():
